@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shivansh Sharma — Making LLMs Faster, Smaller & Easier to Understand</title>
   <meta name="description" content="Portfolio of Shivansh Sharma — CS undergrad and AI/ML researcher making Large Language Models faster, smaller, and easier to understand." />
+  <meta name="theme-color" content="#FDF7F0" />
+  <script>document.documentElement.classList.add('js');</script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,6 +88,13 @@
       color: #2B231D;
     }
 
+    h1, h2, h3 {
+      text-wrap: balance;
+    }
+    p {
+      text-wrap: pretty;
+    }
+
     /* Subtle warm paper dot pattern */
     .paper-grain {
       background-image: radial-gradient(rgba(138, 62, 40, 0.05) 1px, transparent 0);
@@ -129,15 +138,111 @@
       right: -4px;
     }
 
-    /* Scroll reveal transitions */
-    .reveal-up {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    /* ---------------------------------------------------------
+       MOTION SYSTEM — slow, weighted entrances (Apple-style)
+       --------------------------------------------------------- */
+    :root {
+      --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
     }
-    .reveal-up.is-visible {
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      scroll-padding-top: 5.5rem;
+    }
+
+    main > section[id] {
+      scroll-margin-top: 5.25rem;
+    }
+
+    html.js [data-reveal],
+    html.js [data-reveal-group] > * {
+      opacity: 0;
+      transform: translate3d(0, 46px, 0) scale(0.99);
+      transition:
+        opacity 1s var(--ease-apple) var(--reveal-delay, 0ms),
+        transform 1s var(--ease-apple) var(--reveal-delay, 0ms),
+        translate 0.4s var(--ease-apple),
+        box-shadow 0.4s var(--ease-apple),
+        border-color 0.4s ease;
+    }
+    html.js [data-reveal="left"] { transform: translate3d(-64px, 0, 0) scale(0.99); }
+    html.js [data-reveal="right"] { transform: translate3d(64px, 0, 0) scale(0.99); }
+    html.js [data-reveal="scale"] { transform: scale(0.93); }
+    html.js [data-reveal="fade"] { transform: none; }
+
+    html.js [data-reveal].is-visible,
+    html.js [data-reveal-group] > *.is-visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
+    }
+
+    @keyframes heroRise {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+        filter: blur(10px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+        filter: blur(0);
+      }
+    }
+    @keyframes heroGlide {
+      from {
+        opacity: 0;
+        transform: translate3d(72px, 16px, 0) scale(0.965);
+        filter: blur(8px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+        filter: blur(0);
+      }
+    }
+    .hero-stagger > * {
+      animation: heroRise 1.1s var(--ease-apple) both;
+    }
+    .hero-stagger > *:nth-child(1) { animation-delay: 0.06s; }
+    .hero-stagger > *:nth-child(2) { animation-delay: 0.16s; }
+    .hero-stagger > *:nth-child(3) { animation-delay: 0.26s; }
+    .hero-stagger > *:nth-child(4) { animation-delay: 0.36s; }
+    .hero-stagger > *:nth-child(5) { animation-delay: 0.46s; }
+    .hero-demo {
+      animation: heroGlide 1.25s var(--ease-apple) 0.3s both;
+    }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translate3d(0, 12px, 0); }
+      to { opacity: 1; transform: none; }
+    }
+    .p1-panel:not(.hidden),
+    .p2-panel:not(.hidden),
+    .p3-panel:not(.hidden) {
+      animation: panelIn 0.55s var(--ease-apple) both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero-stagger > *,
+      .hero-demo,
+      .p1-panel:not(.hidden),
+      .p2-panel:not(.hidden),
+      .p3-panel:not(.hidden),
+      .ambient-wash-sage,
+      .ambient-wash-clay,
+      .ambient-wash-sky,
+      .ambient-wash-lavender {
+        animation: none !important;
+      }
+      html.js [data-reveal],
+      html.js [data-reveal-group] > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
     }
 
     /* Custom Warm Range Slider */
@@ -189,14 +294,27 @@
 
     /* Warm Card Hover */
     .monograph-card {
-      background: #FFFBF6;
+      background: linear-gradient(180deg, #FFFCF8 0%, #FFFBF6 100%);
       border: 1px solid #E6D4BE;
       box-shadow: 0 6px 24px -6px rgba(102, 68, 42, 0.06);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+      transition:
+        opacity 1s var(--ease-apple) var(--reveal-delay, 0ms),
+        transform 1s var(--ease-apple) var(--reveal-delay, 0ms),
+        translate 0.45s var(--ease-apple),
+        box-shadow 0.45s var(--ease-apple),
+        border-color 0.45s ease;
     }
     .monograph-card:hover {
-      box-shadow: 0 16px 36px -10px rgba(102, 68, 42, 0.10);
+      translate: 0 -3px;
+      box-shadow: 0 20px 46px -14px rgba(102, 68, 42, 0.14);
       border-color: #D4B99B;
+    }
+    @media (hover: none) {
+      .monograph-card:hover {
+        translate: none;
+        box-shadow: 0 6px 24px -6px rgba(102, 68, 42, 0.06);
+        border-color: #E6D4BE;
+      }
     }
 
     /* Keep long strings from spilling out of cards on very narrow screens */
@@ -249,12 +367,220 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #C2A88E;
     }
+
+    /* ---------------------------------------------------------
+       HEADER, PROGRESS, NAV & MOBILE MENU
+       --------------------------------------------------------- */
+    #site-header {
+      padding-top: env(safe-area-inset-top);
+      transition: box-shadow 0.45s var(--ease-apple);
+    }
+    #site-header .header-inner {
+      height: 4rem;
+      transition: height 0.45s var(--ease-apple);
+    }
+    #site-header.is-scrolled {
+      box-shadow: 0 12px 32px -22px rgba(102, 68, 42, 0.45);
+    }
+    #site-header.is-scrolled .header-inner {
+      height: 3.5rem;
+    }
+    #scroll-progress {
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      will-change: transform;
+      box-shadow: 0 0 10px rgba(223, 182, 104, 0.45);
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 1.5px;
+      background: currentColor;
+      opacity: 0.55;
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      transition: transform 0.45s var(--ease-apple);
+    }
+    .nav-link:hover::after,
+    .nav-link.is-active::after {
+      transform: scaleX(1);
+    }
+    .nav-link.is-active {
+      color: #2B231D;
+    }
+
+    #mobile-menu {
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-8px);
+      overflow: hidden;
+      visibility: hidden;
+      transition:
+        max-height 0.5s var(--ease-apple),
+        opacity 0.35s ease,
+        transform 0.5s var(--ease-apple),
+        visibility 0s linear 0.5s;
+    }
+    #mobile-menu.is-open {
+      max-height: min(34rem, calc(100dvh - 4rem));
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+      transition:
+        max-height 0.5s var(--ease-apple),
+        opacity 0.35s ease,
+        transform 0.5s var(--ease-apple),
+        visibility 0s;
+    }
+    #mobile-menu-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #mobile-menu-btn.is-open {
+      background-color: #F9E0D6;
+    }
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 0.15rem;
+      border-bottom: 1px solid rgba(230, 212, 190, 0.65);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5E5046;
+    }
+    .mobile-nav-link:last-child {
+      border-bottom: 0;
+    }
+    .mobile-nav-link .idx {
+      color: #B5A496;
+      font-size: 10px;
+    }
+
+    /* ---------------------------------------------------------
+       BACK TO TOP
+       --------------------------------------------------------- */
+    #back-to-top {
+      bottom: calc(1.25rem + env(safe-area-inset-bottom));
+      right: calc(1rem + env(safe-area-inset-right));
+      opacity: 0;
+      transform: translateY(14px) scale(0.94);
+      pointer-events: none;
+      transition:
+        opacity 0.4s ease,
+        transform 0.5s var(--ease-apple),
+        background-color 0.3s ease;
+    }
+    #back-to-top.is-shown {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    /* ---------------------------------------------------------
+       MOBILE TAP TARGETS, TAB STRIPS & SCROLL AFFORDANCES
+       --------------------------------------------------------- */
+    a, button {
+      -webkit-tap-highlight-color: transparent;
+    }
+    :where(a, button, [tabindex]):focus-visible {
+      outline: 2px solid #8A3E28;
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 1023px) {
+      .tab-strip {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x proximity;
+        scrollbar-width: none;
+        padding: 3px 2px 5px;
+        width: 100%;
+        min-width: 0;
+      }
+      .tab-strip::-webkit-scrollbar {
+        display: none;
+      }
+      .tab-strip > button {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        scroll-snap-align: start;
+        min-height: 40px;
+      }
+      .p3-conf-btn,
+      .p3-gpu-btn,
+      .triton-shape-btn,
+      #nltk-toggle-btn,
+      #p3-replay-btn,
+      #p3-showall-btn {
+        min-height: 38px;
+      }
+      .monograph-card {
+        scroll-margin-top: 4.75rem;
+      }
+    }
+
+    .chart-scroller {
+      overscroll-behavior-x: contain;
+      scroll-behavior: smooth;
+    }
+    .chart-scroll-hint {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.4rem;
+      letter-spacing: 0.02em;
+    }
+    .hint-arrow {
+      display: inline-block;
+      animation: hintNudge 2.4s ease-in-out infinite;
+    }
+    @keyframes hintNudge {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+    }
+
+    /* Gentle drift for the ambient washes (desktop, reduced-motion safe) */
+    @keyframes washDrift {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(2.5rem, -1.5rem, 0) scale(1.06); }
+    }
+    .ambient-wash-sage { animation: washDrift 26s ease-in-out infinite alternate; }
+    .ambient-wash-clay { animation: washDrift 31s ease-in-out infinite alternate-reverse; }
+    .ambient-wash-sky { animation: washDrift 28s ease-in-out infinite alternate; }
+    .ambient-wash-lavender { animation: washDrift 34s ease-in-out infinite alternate-reverse; }
+    @media (max-width: 767px) {
+      .ambient-wash-sage,
+      .ambient-wash-clay,
+      .ambient-wash-sky,
+      .ambient-wash-lavender {
+        animation: none;
+      }
+    }
+
+    /* Keep iOS Safari from rubber-banding the page sideways */
+    html, body {
+      overscroll-behavior-x: none;
+    }
   </style>
 </head>
 <body class="paper-grain relative min-h-screen selection:bg-pastel-clay selection:text-ink">
 
   <!-- Warm Sunlit Pastel Washes -->
-  <div class="pointer-events-none fixed inset-0 overflow-hidden z-0">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden z-0" aria-hidden="true">
     <div class="ambient-wash-sage absolute -top-48 -left-40 w-[44rem] h-[44rem] rounded-full"></div>
     <div class="ambient-wash-clay absolute top-[18%] -right-48 w-[42rem] h-[42rem] rounded-full"></div>
     <div class="ambient-wash-sky absolute top-[54%] -left-48 w-[46rem] h-[46rem] rounded-full"></div>
@@ -262,9 +588,9 @@
   </div>
 
   <!-- Top Navigation Bar -->
-  <header class="sticky top-0 z-40 backdrop-blur-md bg-[#FDF7F0]/90 border-b border-paper-border transition-all">
-    <div class="max-w-[1320px] mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-      <a href="#top" class="flex items-center gap-3 group">
+  <header id="site-header" class="sticky top-0 z-40 backdrop-blur-md bg-[#FDF7F0]/90 border-b border-paper-border">
+    <div class="header-inner max-w-[1320px] mx-auto px-5 sm:px-8 flex items-center justify-between gap-4">
+      <a href="#top" class="flex items-center gap-3 group shrink-0">
         <span class="w-8 h-8 rounded-full bg-pastel-clay border border-pastel-clayStroke/60 flex items-center justify-center font-serif italic text-lg text-pastel-clayDeep group-hover:scale-105 transition-transform">S</span>
         <div class="flex flex-col">
           <span class="font-serif font-medium text-base tracking-tight text-ink leading-none">Shivansh Sharma</span>
@@ -272,33 +598,62 @@
         </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-7 text-xs font-mono uppercase tracking-wider text-ink-secondary">
-        <a href="#monograph-01" class="hover:text-ink transition-colors py-1">01. Deleting Layers</a>
-        <a href="#monograph-02" class="hover:text-ink transition-colors py-1">02. LLM Shortcuts</a>
-        <a href="#monograph-03" class="hover:text-ink transition-colors py-1">03. Skipping Layers</a>
-        <a href="#systems-kernels" class="hover:text-ink transition-colors py-1">04. GPU Kernels &amp; Code</a>
-        <a href="#cv-archive" class="hover:text-ink transition-colors py-1">05. Skills &amp; Info</a>
+      <nav class="hidden lg:flex items-center gap-7 text-xs font-mono uppercase tracking-wider text-ink-secondary" aria-label="Sections">
+        <a href="#monograph-01" class="nav-link hover:text-ink transition-colors py-1 whitespace-nowrap">01. Layers</a>
+        <a href="#monograph-02" class="nav-link hover:text-ink transition-colors py-1 whitespace-nowrap">02. Shortcuts</a>
+        <a href="#monograph-03" class="nav-link hover:text-ink transition-colors py-1 whitespace-nowrap">03. Skipping</a>
+        <a href="#systems-kernels" class="nav-link hover:text-ink transition-colors py-1 whitespace-nowrap">04. Kernels</a>
+        <a href="#cv-archive" class="nav-link hover:text-ink transition-colors py-1 whitespace-nowrap">05. Skills</a>
       </nav>
 
-      <div class="flex items-center gap-2.5">
-        <a href="https://github.com/Shivansh-Game" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-full text-xs font-mono bg-paper-warm hover:bg-pastel-clay/70 text-ink border border-paper-border transition-colors flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/Shivansh-Game" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" class="px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-mono bg-paper-warm hover:bg-pastel-clay/70 text-ink border border-paper-border transition-colors flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span class="hidden sm:inline">GitHub</span>
         </a>
+        <button id="mobile-menu-btn" type="button" class="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-paper-border bg-paper-warm/70 text-ink hover:bg-paper-muted transition-colors" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+          <svg id="menu-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg id="menu-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
       </div>
     </div>
+
+    <!-- Mobile navigation sheet -->
+    <div id="mobile-menu" class="lg:hidden absolute inset-x-0 top-full bg-[#FDF7F0] border-t border-b border-paper-border shadow-[0_28px_48px_-28px_rgba(102,68,42,0.45)]">
+      <nav class="px-5 sm:px-8 pt-2 pb-1" aria-label="Sections">
+        <a href="#monograph-01" class="mobile-nav-link"><span>01 &bull; Deleting Layers</span><span class="idx">&rarr;</span></a>
+        <a href="#monograph-02" class="mobile-nav-link"><span>02 &bull; LLM Shortcuts</span><span class="idx">&rarr;</span></a>
+        <a href="#monograph-03" class="mobile-nav-link"><span>03 &bull; Skipping Layers</span><span class="idx">&rarr;</span></a>
+        <a href="#systems-kernels" class="mobile-nav-link"><span>04 &bull; GPU Kernels &amp; Code</span><span class="idx">&rarr;</span></a>
+        <a href="#cv-archive" class="mobile-nav-link"><span>05 &bull; Skills &amp; Info</span><span class="idx">&rarr;</span></a>
+      </nav>
+      <div class="px-5 sm:px-8 pt-3 pb-5 flex flex-wrap gap-2 font-mono text-[11px]">
+        <a href="https://github.com/Shivansh-Game" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-full bg-paper-warm border border-paper-border text-ink">GitHub</a>
+        <a href="https://orcid.org/0009-0009-8409-6858" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-full bg-paper-warm border border-paper-border text-ink">ORCID</a>
+        <a href="https://www.linkedin.com/in/shivansh-sharma-dev/" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-full bg-paper-warm border border-paper-border text-ink">LinkedIn</a>
+        <a href="mailto:shivanshsharma71231@gmail.com" class="px-3 py-2 rounded-full bg-paper-warm border border-paper-border text-ink">Email</a>
+      </div>
+    </div>
+
+    <!-- Reading progress -->
+    <div class="absolute inset-x-0 bottom-0 h-[2px] overflow-hidden" aria-hidden="true">
+      <div id="scroll-progress" class="h-full w-full bg-gradient-to-r from-pastel-clayStroke via-pastel-ochreStroke to-pastel-sageStroke"></div>
+    </div>
   </header>
+
+  <!-- Dim layer behind the mobile menu -->
+  <div id="mobile-menu-backdrop" class="lg:hidden fixed inset-0 z-30 bg-[#2B231D]/20 opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true"></div>
 
   <main id="top" class="relative z-10 max-w-[1320px] mx-auto px-5 sm:px-8">
 
     <!-- ==========================================
          HERO SECTION: SIMPLE PITCH + LIVE LAYER ANIMATION
          ========================================== -->
-    <section class="pt-12 pb-20 md:pt-20 md:pb-28 border-b border-paper-border crosshair-corner">
+    <section class="pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-20 md:pb-28 border-b border-paper-border crosshair-corner">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         
         <!-- Left Column: Friendly, Clear Introduction -->
-        <div class="lg:col-span-7 space-y-7">
+        <div class="lg:col-span-7 space-y-7 hero-stagger">
           <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-pastel-ochre/80 border border-pastel-ochreStroke/60">
             <span class="w-2 h-2 rounded-full bg-pastel-clayDeep pulse-ring"></span>
             <span class="font-mono text-[11px] uppercase tracking-widest text-pastel-ochreDeep font-medium">
@@ -306,7 +661,7 @@
             </span>
           </div>
 
-          <h1 class="font-serif text-4xl sm:text-6xl lg:text-[62px] text-ink leading-[1.08] tracking-tight">
+          <h1 class="font-serif text-4xl sm:text-6xl lg:text-[62px] text-ink leading-[1.08] tracking-tight text-balance">
             Making LLMs <span class="italic font-normal text-pastel-clayDeep underline decoration-pastel-clayStroke/70 decoration-2 underline-offset-8">Faster, Smaller</span>, and Easier to Understand.
           </h1>
 
@@ -359,7 +714,7 @@
         </div>
 
         <!-- Right Column: Interactive Animation Showing Tokens Jumping Over Layers -->
-        <div class="lg:col-span-5">
+        <div class="lg:col-span-5 hero-demo">
           <div class="monograph-card rounded-2xl p-4 sm:p-5 relative overflow-hidden">
             <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-paper-border">
               <div class="flex items-center gap-2 min-w-0">
@@ -377,7 +732,7 @@
 
             <!-- Interactive HTML5 Canvas -->
             <div class="relative h-[340px] sm:h-[370px] w-full rounded-xl bg-[#FAF1E4] border border-paper-border overflow-hidden">
-              <canvas id="hero-neural-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+              <canvas id="hero-neural-canvas" class="w-full h-full block cursor-crosshair touch-pan-y" role="img" aria-label="Animated diagram of a 28-layer model where easy tokens skip layers 17 through 24"></canvas>
               <div class="pointer-events-none absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[10px] sm:text-[11px] font-mono text-ink-secondary bg-[#FFFBF6]/95 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-paper-border">
                 <span id="hero-canvas-status">Easy tokens jump right over Layers 17 to 24!</span>
                 <span class="text-pastel-sageDeep font-semibold" id="hero-canvas-metric">9.44% Faster &bull; 95.3% Accuracy Kept</span>
@@ -396,15 +751,15 @@
     <!-- ==========================================
          PAPER 01: WHEN DOES DELETING LLM LAYERS WORK?
          ========================================== -->
-    <section id="monograph-01" class="py-20 md:py-28 border-b border-paper-border crosshair-corner reveal-up">
+    <section id="monograph-01" class="py-16 sm:py-20 md:py-28 border-b border-paper-border crosshair-corner">
       <!-- Section Header -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8 sm:mb-12" data-reveal>
         <div class="lg:col-span-5">
           <div class="flex items-center gap-2.5 mb-3">
             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono uppercase tracking-widest bg-pastel-ochre text-pastel-ochreDeep border border-pastel-ochreStroke/60">Paper 01 &bull; Preprint (Oct 2026)</span>
             <span class="font-mono text-xs text-ink-muted">Sole Author</span>
           </div>
-          <h2 class="font-serif text-3xl sm:text-4xl text-ink leading-tight">
+          <h2 class="font-serif text-3xl sm:text-4xl text-ink leading-tight text-balance">
             When Can You Safely Delete Layers from an LLM?
           </h2>
           <p class="font-mono text-xs text-ink-muted mt-2">
@@ -427,10 +782,10 @@
       </div>
 
       <!-- Interactive Figure Workspace for Paper 1 -->
-      <div class="monograph-card rounded-2xl p-5 sm:p-8">
+      <div class="monograph-card rounded-2xl p-5 sm:p-8" data-reveal="scale" style="--reveal-delay: 90ms">
         <!-- Figure Tabs -->
         <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-paper-border">
-          <div class="flex flex-wrap gap-2" role="tablist">
+          <div class="flex flex-wrap gap-2 tab-strip" role="tablist">
             <button data-p1-tab="fig1" class="p1-tab-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider bg-ink text-paper-card transition-all">
               Graph 1 &bull; Pythia Error &amp; The 2.8B Spike
             </button>
@@ -645,14 +1000,14 @@
     <!-- ==========================================
          PAPER 02: DO LLMS FOLLOW RULES OR TAKE LAZY SHORTCUTS?
          ========================================== -->
-    <section id="monograph-02" class="py-20 md:py-28 border-b border-paper-border crosshair-corner reveal-up">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+    <section id="monograph-02" class="py-16 sm:py-20 md:py-28 border-b border-paper-border crosshair-corner">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8 sm:mb-12" data-reveal>
         <div class="lg:col-span-5">
           <div class="flex items-center gap-2.5 mb-3">
             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono uppercase tracking-widest bg-pastel-clay text-pastel-clayDeep border border-pastel-clayStroke/60">Paper 02 &bull; Preprint (Oct 2026)</span>
             <span class="font-mono text-xs text-ink-muted">Sole Author</span>
           </div>
-          <h2 class="font-serif text-3xl sm:text-4xl text-ink leading-tight">
+          <h2 class="font-serif text-3xl sm:text-4xl text-ink leading-tight text-balance">
             Do Transformers Follow Rules They Know, or Take Lazy Shortcuts?
           </h2>
           <p class="font-mono text-xs text-ink-muted mt-2">
@@ -675,10 +1030,10 @@
       </div>
 
       <!-- Interactive Figure Workspace for Paper 2 -->
-      <div class="monograph-card rounded-2xl p-5 sm:p-8">
+      <div class="monograph-card rounded-2xl p-5 sm:p-8" data-reveal="scale" style="--reveal-delay: 90ms">
         <!-- Tabs -->
         <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-paper-border">
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-2 tab-strip">
             <button data-p2-tab="fig3" class="p2-tab-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider bg-ink text-paper-card transition-all">
               Graph 1 &bull; Inside the Model's Layers (And How We Fix It)
             </button>
@@ -830,14 +1185,14 @@
          PAPER 03: SKIPPING 8 LAYERS AT ONCE TO RUN LLMS FASTER ON LOCAL GPUS
          (Strictly omitting the restricted paper title and review venue)
          ========================================== -->
-    <section id="monograph-03" class="py-20 md:py-28 border-b border-paper-border crosshair-corner reveal-up">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+    <section id="monograph-03" class="py-16 sm:py-20 md:py-28 border-b border-paper-border crosshair-corner">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8 sm:mb-12" data-reveal>
         <div class="lg:col-span-5">
           <div class="flex items-center gap-2.5 mb-3">
             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono uppercase tracking-widest bg-pastel-sage text-pastel-sageDeep border border-pastel-sageStroke/60">Paper 03 &bull; Double-Blind Review</span>
             <span class="font-mono text-xs text-ink-muted">Sole Author</span>
           </div>
-          <h2 class="font-serif text-3xl sm:text-4xl text-ink leading-tight">
+          <h2 class="font-serif text-3xl sm:text-4xl text-ink leading-tight text-balance">
             Skipping 8 Layers in One Jump to Run LLMs Faster on Everyday GPUs
           </h2>
           <p class="font-mono text-xs text-ink-muted mt-2">
@@ -860,10 +1215,10 @@
       </div>
 
       <!-- Interactive Figure Workspace for Paper 3 -->
-      <div class="monograph-card rounded-2xl p-5 sm:p-8">
+      <div class="monograph-card rounded-2xl p-5 sm:p-8" data-reveal="scale" style="--reveal-delay: 90ms">
         <!-- Tabs -->
         <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-paper-border">
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-2 tab-strip">
             <button data-p3-tab="router" class="p3-tab-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider bg-ink text-paper-card transition-all">
               Diagram 1 &bull; How the 8-Layer Jump Works
             </button>
@@ -1242,15 +1597,15 @@
     <!-- ==========================================
          SECTION 04: GPU KERNELS & OPEN SOURCE CONTRIBUTIONS
          ========================================== -->
-    <section id="systems-kernels" class="py-20 md:py-28 border-b border-paper-border crosshair-corner reveal-up">
-      <div class="mb-12">
+    <section id="systems-kernels" class="py-16 sm:py-20 md:py-28 border-b border-paper-border crosshair-corner">
+      <div class="mb-8 sm:mb-12" data-reveal>
         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono uppercase tracking-widest bg-pastel-ochre text-pastel-ochreDeep border border-pastel-ochreStroke/60">04 &bull; Engineering &amp; Open Source</span>
-        <h2 class="font-serif text-3xl sm:text-4xl text-ink mt-3">
+        <h2 class="font-serif text-3xl sm:text-4xl text-ink mt-3 text-balance">
           Custom GPU Kernels &amp; Open Source Fixes
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8" data-reveal-group data-reveal-step="90">
         
         <!-- Left 7 Cols: Fused SwiGLU Kernel Optimization in OpenAI Triton -->
         <div class="lg:col-span-7 monograph-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
@@ -1374,14 +1729,14 @@
     <!-- ==========================================
          SECTION 05: SKILLS, EDUCATION & CONTACT
          ========================================== -->
-    <section id="cv-archive" class="py-20 md:py-28 crosshair-corner reveal-up">
+    <section id="cv-archive" class="py-16 sm:py-20 md:py-28 crosshair-corner">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
         
         <!-- Left 5 Cols: Education & Contact Coordinates -->
-        <div class="lg:col-span-5 space-y-8">
+        <div class="lg:col-span-5 space-y-8" data-reveal>
           <div>
             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono uppercase tracking-widest bg-pastel-clay text-pastel-clayDeep border border-pastel-clayStroke/60">05 &bull; About &amp; Contact</span>
-            <h2 class="font-serif text-3xl sm:text-4xl text-ink mt-3">
+            <h2 class="font-serif text-3xl sm:text-4xl text-ink mt-3 text-balance">
               Education, Skills &amp; How to Reach Me
             </h2>
           </div>
@@ -1421,7 +1776,7 @@
         </div>
 
         <!-- Right 7 Cols: Simple, Clear Technical Skills -->
-        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6" data-reveal-group data-reveal-step="70">
           <div class="monograph-card rounded-2xl p-6 space-y-3">
             <div class="w-8 h-8 rounded-lg bg-pastel-sage flex items-center justify-center font-mono text-xs text-pastel-sageDeep font-bold">01</div>
             <h3 class="font-serif text-xl text-ink">Making LLMs Fast &amp; Small</h3>
@@ -1488,7 +1843,7 @@
 
   <!-- Simple Footer -->
   <footer class="border-t border-paper-border bg-paper-warm/70 relative z-10">
-    <div class="max-w-[1320px] mx-auto px-5 sm:px-8 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <div class="max-w-[1320px] mx-auto px-5 sm:px-8 py-10 sm:py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6" data-reveal="fade">
       <div>
         <div class="font-serif text-xl text-ink">Shivansh Sharma</div>
         <p class="font-mono text-xs text-ink-muted mt-1">
@@ -1503,6 +1858,11 @@
     </div>
   </footer>
 
+  <!-- Floating back-to-top -->
+  <button id="back-to-top" type="button" aria-label="Back to top" class="fixed z-40 w-11 h-11 rounded-full bg-ink text-paper-card border border-ink-secondary/40 shadow-[0_10px_30px_-10px_rgba(43,35,29,0.55)] flex items-center justify-center hover:bg-ink-secondary transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
   <!-- ==========================================
        INTERACTIVE DATA & ANIMATION ENGINE
        ========================================== -->
@@ -1510,21 +1870,109 @@
     (function() {
       'use strict';
 
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       // ---------------------------------------------------------
-      // 1. SCROLL REVEAL OBSERVER
+      // 1. SCROLL REVEAL + STAGGERED GROUPS
       // ---------------------------------------------------------
-      const revealEls = document.querySelectorAll('.reveal-up');
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries) => {
+      document.querySelectorAll('[data-reveal-group]').forEach(group => {
+        const step = parseInt(group.getAttribute('data-reveal-step') || '70', 10);
+        Array.from(group.children).forEach((child, i) => {
+          if (!child.hasAttribute('data-reveal')) child.setAttribute('data-reveal', '');
+          child.style.setProperty('--reveal-delay', (i * step) + 'ms');
+        });
+      });
+
+      const revealEls = document.querySelectorAll('[data-reveal]');
+      if ('IntersectionObserver' in window && !reduceMotion) {
+        const io = new IntersectionObserver((entries, observer) => {
           entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-            }
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
           });
-        }, { threshold: 0.08 });
+        }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
         revealEls.forEach(el => io.observe(el));
       } else {
         revealEls.forEach(el => el.classList.add('is-visible'));
+      }
+
+      // ---------------------------------------------------------
+      // 1b. HEADER: READING PROGRESS, ACTIVE LINK, MOBILE MENU
+      // ---------------------------------------------------------
+      const headerEl = document.getElementById('site-header');
+      const progressEl = document.getElementById('scroll-progress');
+      const backTopEl = document.getElementById('back-to-top');
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuBackdrop = document.getElementById('mobile-menu-backdrop');
+      const iconOpen = document.getElementById('menu-icon-open');
+      const iconClose = document.getElementById('menu-icon-close');
+
+      let scrollQueued = false;
+      function syncScrollUI() {
+        scrollQueued = false;
+        const y = window.scrollY || window.pageYOffset || 0;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+        if (progressEl) progressEl.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+        if (headerEl) headerEl.classList.toggle('is-scrolled', y > 8);
+        if (backTopEl) backTopEl.classList.toggle('is-shown', y > 720);
+      }
+      window.addEventListener('scroll', () => {
+        if (!scrollQueued) {
+          scrollQueued = true;
+          requestAnimationFrame(syncScrollUI);
+        }
+      }, { passive: true });
+      syncScrollUI();
+
+      if (backTopEl) {
+        backTopEl.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        });
+      }
+
+      const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+      if ('IntersectionObserver' in window && navLinks.length) {
+        const sectionObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            navLinks.forEach(link => {
+              link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
+            });
+          });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+        navLinks.forEach(link => {
+          const section = document.querySelector(link.getAttribute('href'));
+          if (section) sectionObserver.observe(section);
+        });
+      }
+
+      function setMobileMenu(open) {
+        if (!mobileMenu || !menuBtn) return;
+        mobileMenu.classList.toggle('is-open', open);
+        menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        menuBtn.classList.toggle('is-open', open);
+        if (menuBackdrop) menuBackdrop.classList.toggle('is-open', open);
+        if (iconOpen) iconOpen.classList.toggle('hidden', open);
+        if (iconClose) iconClose.classList.toggle('hidden', !open);
+      }
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => setMobileMenu(!mobileMenu.classList.contains('is-open')));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMobileMenu(false)));
+        if (menuBackdrop) menuBackdrop.addEventListener('click', () => setMobileMenu(false));
+        window.addEventListener('scroll', () => {
+          if (mobileMenu.classList.contains('is-open')) setMobileMenu(false);
+        }, { passive: true });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMobileMenu(false); });
+        document.addEventListener('click', (e) => {
+          if (mobileMenu.classList.contains('is-open') && !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+            setMobileMenu(false);
+          }
+        });
+        window.addEventListener('resize', () => { if (window.innerWidth >= 1024) setMobileMenu(false); });
       }
 
       // ---------------------------------------------------------
@@ -1540,7 +1988,7 @@
 
       function resizeHeroCanvas() {
         const rect = heroCanvas.parentElement.getBoundingClientRect();
-        const dpr = window.devicePixelRatio || 1;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
         heroCanvas.width = rect.width * dpr;
         heroCanvas.height = rect.height * dpr;
         heroCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1548,7 +1996,8 @@
 
       function createParticles() {
         particles.length = 0;
-        for (let i = 0; i < 34; i++) {
+        const count = window.innerWidth < 640 ? 20 : 34;
+        for (let i = 0; i < count; i++) {
           particles.push({
             progress: Math.random(),
             speed: 0.0022 + Math.random() * 0.0018,
@@ -1689,16 +2138,16 @@
             14, 24
           );
         }
-
-        requestAnimationFrame(drawHeroCanvas);
       }
 
-      heroCanvas.addEventListener('mousemove', (e) => {
+      const setHeroPointer = (e) => {
         const rect = heroCanvas.getBoundingClientRect();
         mouseX = e.clientX - rect.left;
         mouseY = e.clientY - rect.top;
-      });
-      heroCanvas.addEventListener('mouseleave', () => {
+      };
+      heroCanvas.addEventListener('pointermove', setHeroPointer);
+      heroCanvas.addEventListener('pointerdown', setHeroPointer);
+      heroCanvas.addEventListener('pointerleave', () => {
         mouseX = -1000;
         mouseY = -1000;
       });
@@ -1717,6 +2166,43 @@
         document.getElementById('hero-sim-mode-skip').className = 'px-2.5 py-1 rounded text-[11px] font-mono bg-paper-warm text-ink-secondary border border-paper-border hover:bg-paper-muted transition-colors';
         document.getElementById('hero-canvas-status').textContent = 'Standard Mode: Every token runs through all 28 layers';
         document.getElementById('hero-canvas-metric').textContent = 'Slower • Uses 100% KV Cache';
+      });
+
+      // Only animate the hero canvas while it is actually on screen.
+      let heroRafId = null;
+      function heroLoop() {
+        drawHeroCanvas();
+        heroRafId = requestAnimationFrame(heroLoop);
+      }
+      if ('IntersectionObserver' in window) {
+        const heroObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              if (heroRafId === null) heroRafId = requestAnimationFrame(heroLoop);
+            } else if (heroRafId !== null) {
+              cancelAnimationFrame(heroRafId);
+              heroRafId = null;
+            }
+          });
+        }, { threshold: 0.02 });
+        heroObserver.observe(heroCanvas.parentElement);
+      } else {
+        heroLoop();
+      }
+
+      // Count-up for the hero stat (skipped for reduced motion)
+      document.querySelectorAll('.counter-val').forEach(el => {
+        const target = parseFloat(el.getAttribute('data-target'));
+        if (Number.isNaN(target) || reduceMotion) return;
+        const duration = 1300;
+        const startAt = performance.now() + 450;
+        function tickCounter(now) {
+          const t = Math.min(1, Math.max(0, (now - startAt) / duration));
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = String(Math.round(target * eased));
+          if (t < 1) requestAnimationFrame(tickCounter);
+        }
+        requestAnimationFrame(tickCounter);
       });
 
       // ---------------------------------------------------------
@@ -2591,15 +3077,15 @@
       // MOBILE CHART SCROLL HINTS
       // ---------------------------------------------------------
       function addMobileChartHints() {
-        const addHint = (el, text) => {
+        const addHint = (el, label) => {
           if (el.nextElementSibling && el.nextElementSibling.classList.contains('chart-scroll-hint')) return;
           const hint = document.createElement('div');
-          hint.className = 'chart-scroll-hint sm:hidden font-mono text-[10px] text-ink-muted mt-1 text-right';
-          hint.textContent = text;
+          hint.className = 'chart-scroll-hint sm:hidden font-mono text-[10px] text-ink-muted mt-1.5 px-0.5';
+          hint.innerHTML = '<span class="hint-arrow" aria-hidden="true">&#8596;</span><span>' + label + '</span>';
           el.insertAdjacentElement('afterend', hint);
         };
-        document.querySelectorAll('.chart-scroller').forEach(el => addHint(el, 'Swipe sideways to see the full chart →'));
-        document.querySelectorAll('.overflow-x-auto').forEach(el => addHint(el, 'Swipe sideways to see the full table →'));
+        document.querySelectorAll('.chart-scroller').forEach(el => addHint(el, 'Swipe to explore the full chart'));
+        document.querySelectorAll('.overflow-x-auto').forEach(el => addHint(el, 'Swipe to see the full table'));
       }
 
       // ---------------------------------------------------------
